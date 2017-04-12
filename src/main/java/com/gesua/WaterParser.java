@@ -1,6 +1,7 @@
 package com.gesua;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,21 +9,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-/**
- * Created by Chirp on 11.03.2017.
- */
 public class WaterParser {
 
     public static final int WATER_FILE_COLUMNS = 12;
     private static final String TAB_SEPARATOR = "\t";
 
-    static List<WaterStats> parseTSV(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+    static List<WaterStats> parseTSV(String fileName) throws IOException, URISyntaxException {
+        Path path = Paths.get(WaterParser.class.getClassLoader().getResource(fileName).toURI());
         List<String> lines = Files.readAllLines(path);
         ArrayList<WaterStats> waterStatsList = new ArrayList<>();
         for (String line : lines) {
@@ -51,8 +48,8 @@ public class WaterParser {
         return list.stream().collect(toMap(ws -> ws.t, ws -> ws));
     }
 
-    static List<WaterStats> parseTSV2(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+    static List<WaterStats> parseTSV2(String fileName) throws IOException, URISyntaxException {
+        Path path = Paths.get(WaterParser.class.getClassLoader().getResource(fileName).toURI());
         return Files.readAllLines(path).stream()
                 .map(line -> line.split(TAB_SEPARATOR))
                 .map(WaterParser::arrayToDoubleList)

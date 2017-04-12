@@ -11,17 +11,17 @@ import static org.junit.Assert.*;
  */
 public class WaterParserTest {
 
-    public static final String FILE = "F:/Global/Global/src/main/resources/water_from_pdf.tsv";
+    public static final String FILE = "water_from_pdf.tsv";
     public static final double DELTA = 0.000001;
 
     @Test
-    public void testWaterParserFirst() throws IOException {
+    public void testWaterParserFirst() throws Exception {
         List<WaterStats> waterStatsList = WaterParser.parseTSV(FILE);
         assertEquals(55.1, waterStatsList.get(0).lamda, DELTA);
     }
 
     @Test
-    public void testWaterParserThenth() throws IOException {
+    public void testWaterParserThenth() throws Exception {
         List<WaterStats> waterStatsList = WaterParser.parseTSV(FILE);
         assertEquals(68, waterStatsList.get(9).lamda, DELTA);
     }
