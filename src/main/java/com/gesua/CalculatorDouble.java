@@ -1,6 +1,9 @@
 package com.gesua;
 
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Created by Chirp on 12.03.2017.
  */
@@ -10,138 +13,149 @@ public class CalculatorDouble {
     public static final double PI = Math.PI;
     public static final double FOUR = 4;
     public static final double THOUSAND = 1000;
-    public static final double ZERO = 0;
     public static final double G = 0.277777778;
+
+    static class Report {
+        final double Dvn = 0.051;
+        final double dnar = 0.008;
+        final double Ltrub = 2;
+        final double lyamdaStali = 16.2;
+        final double tolshinaStenki = 0.001;
+        final double teploprovodimistStali = 16.2;
+        final double teploprovodimostNakipi = 0.22;
+        final double po = 977.8;//Table
+        final double cp = 4.178;//Table
+        final double KoefRiflen = 1;
+        final double bNaYjim = 0.0001;
+        final double bZagr = 0.000051;
+
+        //        double PrinimayemayaTemperaturaStenki = 89.5;
+        //        Par
+        final double Pnar = 0.1;
+        final double popar = 0.658646;
+        final double r = 2250.2;
+        final double NuPar = 0.0000187033;
+        final double Prpar = 1.08266;
+        final double lamdaKond = 0.683532;
+        final double poKondensata = 956.4316;
+        final double MuPar = 0.0001210034;
+
+
+        final double MuKond = 0.00276249;
+        final double dvn;
+        final double dRaschetTeploobTrubki;
+        final double fvn;
+        final double fnar;
+        final double fnarTrubok;
+        final double Fvn;
+        final double fvnNTrubok;
+        final double v1trubka;
+
+
+        final double vNtrubok;
+        final double dTb;
+        final double dTm;
+        final double dTser;
+
+        final double T2ser;
+        final double nyuT2ser;
+        final double pr;
+
+        final double lamda;
+        final double Re;
+
+        final double reRuflen;
+        final double nu;
+        final double nuRuflen;
+        final double alpha;
+
+        final double alphaRuflen;
+        final double alphaGorizontSkorostnaya;
+        final double kPoRovnoy;
+        final double t2sred;
+        final double q;
+        final double qPo45min;
+        final double k;
+        final double F;
+
+
+        final double Fpo45min;
+        //        Fvodu
+        final double Fvodu;
+        final double Fvn_Fvodu;
+        final double Dekv;
+        final double dekv;
+        final double fvnVodu;
+
+
+        final double dekvVnTrubok;
+        //        Par
+        final double dPar;
+
+        final double v;
+
+        Report(final double nTrubok,
+               final double t2sht,
+               final double T1par,
+               final double T2vuh) {
+            fnar = fnar(dnar);
+            Fvn = Fvn(Dvn);
+            Fvn_Fvodu = Fvn_Fvodu(Fvn, fnar, nTrubok);
+            Dekv = Dekv(Fvn_Fvodu);
+            qPo45min = qPo45min(cp, T2vuh, t2sht);
+            alphaGorizontSkorostnaya = alphaGorizontSkorostnaya(T1par, dnar);
+            q = q(G, cp, T2vuh, t2sht);
+            dvn = dvn(dnar, tolshinaStenki, bZagr, bNaYjim);
+            fvn = fvn(dvn);
+            dRaschetTeploobTrubki = dRaschetTeploobTrubki(dvn, dnar);
+            fvnVodu = fvnVodu(dvn, nTrubok);
+            dekvVnTrubok = dekvVnTrubok(fvnVodu);
+            Fvodu = Fvodu(fnar, nTrubok);
+            dekv = dekv(Fvodu);
+            fnarTrubok = fnarTrubok(fnar, nTrubok);
+            fvnNTrubok = fvnNTrubok(fvn, nTrubok);
+            v1trubka = v1trubka(G, fvn, po);
+            vNtrubok = vNtrubok(v1trubka, nTrubok);
+            dTb = dTb(T1par, t2sht);
+            dTm = dTm(T1par, T2vuh);
+            dTser = dTser(dTb, dTm);
+            T2ser = T2ser(T1par, dTser);
+            nyuT2ser = nyuT2ser(T2ser);
+            pr = pr(T2ser);
+            lamda = lamda(T2ser);
+            Re = Re(vNtrubok, dvn, nyuT2ser);
+            reRuflen = reRuflen(Re, KoefRiflen);
+            nu = nu(Re, pr);
+            nuRuflen = nuRuflen(reRuflen, pr);
+            alpha = alpha(nu, lamda, dvn);
+            alphaRuflen = alphaRuflen(nuRuflen, lamda, dvn);
+            kPoRovnoy = kPoRovnoy(alpha, tolshinaStenki, lyamdaStali, bZagr, alphaGorizontSkorostnaya);
+            k = k(alphaRuflen, tolshinaStenki, bZagr, alphaGorizontSkorostnaya);
+            Fpo45min = fPo45min(qPo45min, dTser, k);
+            t2sred = t2sred(T2vuh, t2sht);
+            F = F(q, dTser, k);
+            dPar = dPar(q, r);
+            v = v(dPar, popar, Fvn_Fvodu);
+        }
+
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+        }
+
+    }
 
 
     public static void main(String[] args) {
 
-        double nTrubok = 9;
-        double t2sht = 10;// Т2вх
-        double T1par = 102.66;
-        double T2vuh = 60;
+        final double nTrubok = 9;
+        final double t2sht = 10;// Т2вх
+        final double T1par = 102.66;
+        final double T2vuh = 60;
 
-        double Dvn = 0.051;
-        double dnar = 0.008;
-        double Ltrub = 2;
-        double lyamdaStali = 16.2;
-        double tolshinaStenki = 0.001;
-        double teploprovodimistStali = 16.2;
-        double teploprovodimostNakipi = 0.22;
-        double po = 977.8;//Table
-        double cp = 4.178;//Table
-        double KoefRiflen = 1;
-        double bNaYjim = 0.0001;
-        double bZagr = 0.000051;
-//        double PrinimayemayaTemperaturaStenki = 89.5;
+        Report report = new Report(nTrubok, t2sht, T1par, T2vuh);
 
-        //        Par
-        double Pnar = 0.1;
-        double popar = 0.658646;
-        double r = 2250.2;
-        double NuPar = 0.0000187033;
-        double Prpar = 1.08266;
-        double lamdaKond = 0.683532;
-        double poKondensata = 956.4316;
-        double MuPar = 0.0001210034;
-        double MuKond = 0.00276249;
-
-
-        double dvn = dvn(dnar, tolshinaStenki, bZagr, bNaYjim);
-        double dRaschetTeploobTrubki = dRaschetTeploobTrubki(dvn, dnar);
-        double fvn = fvn(dvn);
-        double fnar = fnar(dnar);
-        double fnarTrubok = fnarTrubok(fnar, nTrubok);
-        double Fvn = Fvn(Dvn);
-        double fvnNTrubok = fvnNTrubok(fvn, nTrubok);
-        double v1trubka = v1trubka(G, fvn, po);
-        double vNtrubok = vNtrubok(v1trubka, nTrubok);
-
-
-        double dTb = dTb(T1par, t2sht);
-        double dTm = dTm(T1par, T2vuh);
-        double dTser = dTser(dTb, dTm);
-        double T2ser = T2ser(T1par, dTser);
-
-        double nyuT2ser = nyuT2ser(T2ser);
-        double pr = pr(T2ser);
-        double lamda = lamda(T2ser);
-
-        double Re = Re(vNtrubok, dvn, nyuT2ser);
-        double reRuflen = reRuflen(Re, KoefRiflen);
-
-        double nu = nu(Re, pr);
-        double nuRuflen = nuRuflen(reRuflen, pr);
-        double alpha = alpha(nu, lamda, dvn);
-        double alphaRuflen = alphaRuflen(nuRuflen, lamda, dvn);
-
-        double alphaGorizontSkorostnaya = alphaGorizontSkorostnaya(T1par, dnar);
-        double kPoRovnoy = kPoRovnoy(alpha, tolshinaStenki, lyamdaStali, bZagr, alphaGorizontSkorostnaya);
-        double t2sred = t2sred(T2vuh, t2sht);
-        double q = q(G, cp, T2vuh, t2sht);
-        double qPo45min = qPo45min(cp, T2vuh, t2sht);
-        double k = k(alphaRuflen, tolshinaStenki, bZagr, alphaGorizontSkorostnaya);
-        double F = F(q, dTser, k);
-        double Fpo45min = fPo45min(qPo45min, dTser, k);
-
-
-//        Fvodu
-        double Fvodu = Fvodu(fnar, nTrubok);
-        double Fvn_Fvodu = Fvn_Fvodu(Fvn, fnar, nTrubok);
-        double Dekv = Dekv(Fvn_Fvodu);
-        double dekv = dekv(Fvodu);
-        double fvnVodu = fvnVodu(dvn, nTrubok);
-        double dekvVnTrubok = dekvVnTrubok(fvnVodu);
-
-
-//        Par
-        double dPar = dPar(q, r);
-        double v = v(dPar, popar, Fvn_Fvodu);
-
-
-        System.out.println("dvn: " + dvn);
-        System.out.println("dRaschetTeploobTrubki: " + dRaschetTeploobTrubki);
-        System.out.println("fvn: " + fvn);
-        System.out.println("fnar: " + fnar);
-        System.out.println("fnarTrubok: " + fnarTrubok);
-        System.out.println("Fvn: " + Fvn);
-        System.out.println("fvnNTrubok: " + fvnNTrubok);
-        System.out.println("v1trubka: " + v1trubka);
-        System.out.println("vNtrubok: " + vNtrubok);
-        System.out.println("dTb: " + dTb);
-        System.out.println("dTm: " + dTm);
-        System.out.println("dTser: " + dTser);
-        System.out.println("T2ser: " + T2ser);
-        System.out.println("nyuT2ser: " + nyuT2ser);
-        System.out.println("pr: " + pr);
-        System.out.println("lamda: " + lamda);
-        System.out.println("Re: " + Re);
-        System.out.println("reRuflen: " + reRuflen);
-        System.out.println("nu: " + nu);
-        System.out.println("nuRuflen: " + nuRuflen);
-        System.out.println("alpha: " + alpha);
-        System.out.println("alphaRuflen: " + alphaRuflen);
-        System.out.println("kPoRovnoy: " + kPoRovnoy);
-        System.out.println("alphaGorizontSkorostnaya: " + alphaGorizontSkorostnaya);
-        System.out.println("t2sred: " + t2sred);
-        System.out.println("Q: " + q);
-        System.out.println("qPo45min: " + qPo45min);
-        System.out.println("K: " + k);
-        System.out.println("F: " + F);
-        System.out.println("Fpo45min: " + Fpo45min);
-
-        System.out.println("***********************");
-        System.out.println("Fvodu" + Fvodu);
-        System.out.println("Fvn_Fvodu" + Fvn_Fvodu);
-        System.out.println("Dekv" + Dekv);
-        System.out.println("dekv" + dekv);
-        System.out.println("fvnVodu" + fvnVodu);
-        System.out.println("dekvVnTrubok" + dekvVnTrubok);
-
-        System.out.println("***********************");
-        System.out.println("dPar" + dPar);
-        System.out.println("v" + v);
-        System.out.println("\n\n\n\n");
+        System.out.println(report);
 
     }
 
