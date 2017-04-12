@@ -86,17 +86,17 @@ public class CalculatorDouble {
 
 
 //        Fvodu
-        double Fvodu = Fvodu(fnar,nTrubok);
-        double Fvn_Fvodu  =Fvn_Fvodu(Fvn,fnar,nTrubok);
+        double Fvodu = Fvodu(fnar, nTrubok);
+        double Fvn_Fvodu = Fvn_Fvodu(Fvn, fnar, nTrubok);
         double Dekv = Dekv(Fvn_Fvodu);
         double dekv = dekv(Fvodu);
-        double fvnVodu = fvnVodu(dvn,nTrubok);
+        double fvnVodu = fvnVodu(dvn, nTrubok);
         double dekvVnTrubok = dekvVnTrubok(fvnVodu);
 
 
 //        Par
         double dPar = dPar(q, r);
-        double v = v(dPar,popar,Fvn_Fvodu);
+        double v = v(dPar, popar, Fvn_Fvodu);
 
 
         System.out.println("dvn: " + dvn);
@@ -131,296 +131,239 @@ public class CalculatorDouble {
         System.out.println("Fpo45min: " + Fpo45min);
 
         System.out.println("***********************");
-        System.out.println("Fvodu"+Fvodu);
-        System.out.println("Fvn_Fvodu"+Fvn_Fvodu);
-        System.out.println("Dekv"+Dekv);
-        System.out.println("dekv"+dekv);
-        System.out.println("fvnVodu"+fvnVodu);
-        System.out.println("dekvVnTrubok"+dekvVnTrubok);
+        System.out.println("Fvodu" + Fvodu);
+        System.out.println("Fvn_Fvodu" + Fvn_Fvodu);
+        System.out.println("Dekv" + Dekv);
+        System.out.println("dekv" + dekv);
+        System.out.println("fvnVodu" + fvnVodu);
+        System.out.println("dekvVnTrubok" + dekvVnTrubok);
 
         System.out.println("***********************");
-        System.out.println("dPar"+dPar);
-        System.out.println("v"+v);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        System.out.println("dPar" + dPar);
+        System.out.println("v" + v);
+        System.out.println("\n\n\n\n");
 
     }
 
     //Расчеты нормализации
     //Для nTrubok
     private static double normNtrub(double F, double Ltrub, double dRaschetTeploobTrubki) {
-        double normNtrub = F / PI / dRaschetTeploobTrubki / Ltrub;
-        return normNtrub;
+        return F / PI / dRaschetTeploobTrubki / Ltrub;
     }
 
     private static double ploshadEkvivalentnoyPoverhnosti(double dRaschetTeploobTrubki, double Ltrub, double nTrubok) {
-        double ploshadEkvivalentnoyPoverhnosti = PI * dRaschetTeploobTrubki * Ltrub * nTrubok * 0.96;
-        return ploshadEkvivalentnoyPoverhnosti;
+        return PI * dRaschetTeploobTrubki * Ltrub * nTrubok * 0.96;
     }
 
     private static double tStenki(double T1par, double q, double alphaGorizontSkorostnaya) {
-        double tStenki = (T1par - 5) - q / alphaGorizontSkorostnaya;
-        return tStenki;
+        return (T1par - 5) - q / alphaGorizontSkorostnaya;
     }
 
     private static double qNorm(double k, double dTser) {
-        double qNorm = k * dTser;
-        return qNorm;
+        return k * dTser;
     }
 
     //Общие+вода
     private static double dvn(double dnar, double tolshinaStenki, double bZagr, double bNaYjim) {
-        double dvn = dnar - (tolshinaStenki * TWO) - (bZagr * TWO) - (bNaYjim * TWO);
-        return dvn;
+        return dnar - (tolshinaStenki * TWO) - (bZagr * TWO) - (bNaYjim * TWO);
     }
 
     private static double dRaschetTeploobTrubki(double dvn, double dnar) {
-        double dRaschetTeploobTrubki = (dvn + dnar) / 2;
-        return dRaschetTeploobTrubki;
+        return (dvn + dnar) / 2;
     }
 
     private static double fvn(double dvn) {
-        double fvn = PI * dvn * dvn / FOUR;
-        return fvn;
+        return PI * dvn * dvn / FOUR;
     }
 
     private static double fnar(double dnar) {
-        double fnar = PI * dnar * dnar / FOUR;
-        return fnar;
+        return PI * dnar * dnar / FOUR;
     }
 
     private static double fnarTrubok(double fnar, double nTrubok) {
-        double fnarTrubok = fnar * nTrubok;
-        return fnarTrubok;
+        return fnar * nTrubok;
     }
 
     private static double Fvn(double Dvn) {
-        double Fvn = Dvn * Dvn * PI / FOUR;
-        return Fvn;
+        return Dvn * Dvn * PI / FOUR;
     }
 
     private static double fvnNTrubok(double fvn, double nTrubok) {
-        double fvnNTrubok = fvn * nTrubok;
-        return fvnNTrubok;
+        return fvn * nTrubok;
     }
 
 
     private static double nyuT2ser(double T2ser) {
-        double nyuT2ser = 0.000000556 + (0.000000478 - 0.000000556) / (60 - 50) * (T2ser - 50);
-        return nyuT2ser;
+        return 0.000000556 + (0.000000478 - 0.000000556) / (60 - 50) * (T2ser - 50);
     }
 
     private static double pr(double T2ser) {
-        double pr = 3.54 + (2.93 - 3.54) / (60 - 50) * (T2ser - 50);
-        return pr;
+        return 3.54 + (2.93 - 3.54) / (60 - 50) * (T2ser - 50);
     }
 
     private static double lamda(double T2ser) {
-        double lamda = Math.pow(10, -2) * (64.8 + (65.9 - 64.8) / (60 - 50) * (T2ser - 50));
-        return lamda;
+        return Math.pow(10, -2) * (64.8 + (65.9 - 64.8) / (60 - 50) * (T2ser - 50));
     }
 
     private static double v1trubka(double G, double fvn, double po) {
-        double v1trubka = G / fvn / po;
-        return v1trubka;
+        return G / fvn / po;
     }
 
     private static double vNtrubok(double v1trubka, double nTrubok) {
-        double vNtrubok = v1trubka / nTrubok;
-        return vNtrubok;
+        return v1trubka / nTrubok;
     }
 
     private static double Re(double vNtrubok, double dvn, double Nyu) {
-        double Re = vNtrubok * dvn / Nyu;
-        return Re;
+        return vNtrubok * dvn / Nyu;
     }
 
     private static double reRuflen(double Re, double koefRuglen) {
-        double reRuflen = Re * koefRuglen;
-        return reRuflen;
+        return Re * koefRuglen;
     }
 
     private static double nu(double Re, double pr) {
-        double nu = 0.021 * Math.pow(Re, 0.8) * Math.pow(pr, 0.43);
-        return nu;
+        return 0.021 * Math.pow(Re, 0.8) * Math.pow(pr, 0.43);
     }
 
     private static double nuRuflen(double reRuflen, double pr) {
-        double nuRuflen = 0.021 * Math.pow(reRuflen, 0.8) * Math.pow(pr, 0.43);
-        return nuRuflen;
+        return 0.021 * Math.pow(reRuflen, 0.8) * Math.pow(pr, 0.43);
     }
 
     private static double alpha(double nu, double lamda, double dvn) {
-        double alpha = nu * lamda / dvn;
-        return alpha;
+        return nu * lamda / dvn;
     }
 
     private static double alphaRuflen(double nuRuflen, double lamda, double dvn) {
-        double alphaRuflen = nuRuflen * lamda / dvn;
-        return alphaRuflen;
+        return nuRuflen * lamda / dvn;
     }
 
     private static double kPoRovnoy(double alpha, double tolshinaStenki, double lyamdaStali, double bZagr, double alphaGorizontSkorostnaya) {
-        double kPoRovnoy = 1 / (1 / alpha + tolshinaStenki / lyamdaStali + bZagr / 1.16 + 1 / alphaGorizontSkorostnaya);
-        return kPoRovnoy;
+        return 1 / (1 / alpha + tolshinaStenki / lyamdaStali + bZagr / 1.16 + 1 / alphaGorizontSkorostnaya);
     }
 
     private static double alphaGorizontSkorostnaya(double T1par, double dnar) {
-        double alphaGorizontSkorostnaya = (4950 + 58.5 * 97.66 - (0.18 * Math.pow(97.66, 2))) / Math.pow(((T1par - 89.5) * 3 * dnar), 0.25);
-        return alphaGorizontSkorostnaya;
+        return (4950 + 58.5 * 97.66 - (0.18 * Math.pow(97.66, 2))) / Math.pow(((T1par - 89.5) * 3 * dnar), 0.25);
     }
 
     private static double t2sred(double T2vuh, double t2sht) {
-        double t2sred = (T2vuh + t2sht) / 2;
-        return t2sred;
+        return (T2vuh + t2sht) / 2;
     }
 
     private static double dTb(double T1par, double t2sht) {
-        double dTb = T1par - t2sht;
-        return dTb;
+        return T1par - t2sht;
     }
 
     private static double dTm(double T1par, double T2vuh) {
-        double dTm = T1par - T2vuh;
-        return dTm;
+        return T1par - T2vuh;
     }
 
     private static double dTser(double dTb, double dTm) {
-        double dTser = (dTb - dTm) / Math.log(dTb / dTm);
-        return dTser;
+        return (dTb - dTm) / Math.log(dTb / dTm);
     }
 
     private static double T2ser(double T1par, double dTser) {
 
-        double T2ser = T1par - dTser;
-        return T2ser;
+        return T1par - dTser;
     }
 
     private static double q(double G, double cp, double T2vuh, double t2sht) {
-        double q = G * cp * (T2vuh - t2sht) * THOUSAND;
-        return q;
+        return G * cp * (T2vuh - t2sht) * THOUSAND;
     }
 
     private static double qPo45min(double cp, double T2vuh, double t2sht) {
-        double gPo45min = 1000 * 60 / 45 * cp * (T2vuh - t2sht) / 3600 * THOUSAND;
-        return gPo45min;
+        return 1000 * 60 / 45 * cp * (T2vuh - t2sht) / 3600 * THOUSAND;
     }
 
     private static double k(double alphaRuflen, double tolshinaStenki, double bzagr, double alphaGorizontSkorostnaya) {
-        double k = 1 / (1 / alphaRuflen + tolshinaStenki / 16.2 + bzagr / 1.16 + 1 / alphaGorizontSkorostnaya);
-        return k;
+        return 1 / (1 / alphaRuflen + tolshinaStenki / 16.2 + bzagr / 1.16 + 1 / alphaGorizontSkorostnaya);
     }
 
     private static double F(double q, double dTser, double k) {
-        double F = q / dTser / k;
-        return F;
+        return q / dTser / k;
     }
 
     private static double fPo45min(double qPo45min, double dTser, double k) {
-        double fPo45min = qPo45min / dTser / k;
-        return fPo45min;
+        return qPo45min / dTser / k;
     }
 
     //need
     private static double Fvodu(double fnar, double nTrubok) {
 
-        double Fvodu = fnar * nTrubok;
-        return Fvodu;
+        return fnar * nTrubok;
     }
 
     private static double Fvn_Fvodu(double Fvn, double fnar, double nTrubok) {
-        double Fvn_Fvodu = Fvn - fnar * nTrubok;
-        return Fvn_Fvodu;
+        return Fvn - fnar * nTrubok;
     }
 
     private static double Dekv(double Fvn_Fvodu) {
-        double Dekv = Math.pow((4 * Fvn_Fvodu / PI), 0.5);
-        return Dekv;
+        return Math.pow((4 * Fvn_Fvodu / PI), 0.5);
     }
 
     private static double dekv(double Fvodu) {
-        double dekv = Math.pow((4 * Fvodu / PI), 0.5);
-        return dekv;
+        return Math.pow((4 * Fvodu / PI), 0.5);
     }
 
     private static double fvnVodu(double dvn, double nTrubok) {
-        double fvnVodu = Math.pow(dvn, 2) * PI / 4 * nTrubok;
-        return fvnVodu;
+        return Math.pow(dvn, 2) * PI / 4 * nTrubok;
     }
 
     private static double dekvVnTrubok(double fvn) {
-        double dekvVnTrubok = Math.pow((fvn * 4 / PI), 0.5);
-        return dekvVnTrubok;
+        return Math.pow((fvn * 4 / PI), 0.5);
     }
 
 //    Пар
 
     private static double dPar(double Q, double r) {
-        double dPar = Q / r / 1000;
-        return dPar;
+        return Q / r / 1000;
     }
 
     private static double v(double Dpar, double poPar, double Fvn_Fvodu) {
-        double v = Dpar / poPar / Fvn_Fvodu;
-        return v;
+        return Dpar / poPar / Fvn_Fvodu;
     }
 
     private static double RePar(double v, double Dekv, double NuPar) {
-        double RePar = v * Dekv / NuPar;
-        return RePar;
+        return v * Dekv / NuPar;
     }
 
     private static double nuPar(double Re, double PrPar) {
-        double nuPar = 0.021 * Math.pow(Re, 0.8) * Math.pow(PrPar, 0.43);
-        return nuPar;
+        return 0.021 * Math.pow(Re, 0.8) * Math.pow(PrPar, 0.43);
     }
 
     private static double AlphaPar(double nuPar, double lamdaKond, double Dekv) {
-        double AlphaPar = nuPar * lamdaKond / Dekv;
-        return AlphaPar;
+        return nuPar * lamdaKond / Dekv;
     }
 
     private static double A(double lamdaKond, double r, double poKond, double poPar, double NuPar) {
-        double A = Math.pow((Math.pow(lamdaKond, 3) * 9.81 * r * 1000 * (poKond - poPar) / NuPar), 0.25);
-        return A;
+        return Math.pow((Math.pow(lamdaKond, 3) * 9.81 * r * 1000 * (poKond - poPar) / NuPar), 0.25);
     }
 
     private static double AlphaGorKondNepodPar(double A, double dnar, double T1par, double Tstenki1) {
-        double AlphaGorKondNepodPar = 0.728 * A / Math.pow(dnar * (T1par - Tstenki1), 0.25);
-        return AlphaGorKondNepodPar;
+        return 0.728 * A / Math.pow(dnar * (T1par - Tstenki1), 0.25);
     }
 
     //    Сопротивление по воде
     private static double reEkv(double vNtrubok, double dekvVnTrubok, double nu) {
-        double reEkv = vNtrubok * dekvVnTrubok / nu;
-        return reEkv;
+        return vNtrubok * dekvVnTrubok / nu;
     }
 
     private static double soprLamda(double dEkv, double reEkv) {
-        double soprLamda = 0.11 * Math.pow((1 / dEkv + 68 / reEkv), 0.25);
-        return soprLamda;
+        return 0.11 * Math.pow((1 / dEkv + 68 / reEkv), 0.25);
     }
 
     private static double dPot(double soprLamda, double Ltrub, double dekvVnTrubok, double vNtrubok, double po) {
-        double dPot = (soprLamda * Ltrub / dekvVnTrubok * Math.pow(vNtrubok, 2) / 2 * po) / 1000;
-        return dPot;
+        return (soprLamda * Ltrub / dekvVnTrubok * Math.pow(vNtrubok, 2) / 2 * po) / 1000;
     }
 
     private static double ksiSujeniya(double fvnVodu, double sorpF) {
-        double ksiSujeniya = 0.5 * (1 - fvnVodu / sorpF);
-        return ksiSujeniya;
+        return 0.5 * (1 - fvnVodu / sorpF);
     }
 
     private static double dpSujeniya(double ksiSujeniya, double vNtrubok, double po) {
-        double dpSujeniya = (ksiSujeniya * Math.pow(vNtrubok, 2) * po / 2) / 1000;
-        return dpSujeniya;
+        return (ksiSujeniya * Math.pow(vNtrubok, 2) * po / 2) / 1000;
     }
 
     private static double dpTotal(double dPot, double dpSujeniya) {
-        double dpTotal = dPot + dpSujeniya;
-        return dpTotal;
+        return dPot + dpSujeniya;
     }
 }
